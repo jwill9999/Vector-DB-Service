@@ -8,7 +8,7 @@ import { createSupabaseVectorStore } from "../vectorStore.js";
 const parsedDimension = process.env.SUPABASE_TEST_EMBEDDING_DIMENSIONS
   ? Number.parseInt(process.env.SUPABASE_TEST_EMBEDDING_DIMENSIONS, 10)
   : undefined;
-const dimension = Number.isFinite(parsedDimension ?? NaN) ? (parsedDimension as number) : 1536;
+const dimension = Number.isFinite(parsedDimension ?? Number.NaN) ? (parsedDimension as number) : 1536;
 const restUrl = process.env.SUPABASE_TEST_URL;
 const directUrl = process.env.SUPABASE_TEST_DIRECT_URL;
 const missingEnv = !restUrl && !directUrl;
