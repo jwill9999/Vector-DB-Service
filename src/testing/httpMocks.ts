@@ -52,7 +52,11 @@ export function createMockResponse(): { response: ServerResponse; state: MockRes
     return response;
   }) as ServerResponse["setHeader"];
 
-  response.end = ((chunk?: string | Buffer, encoding?: BufferEncoding | (() => void), cb?: () => void) => {
+  response.end = ((
+    chunk?: string | Buffer,
+    encoding?: BufferEncoding | (() => void),
+    cb?: () => void
+  ) => {
     let payload = chunk;
     let callback = cb;
 

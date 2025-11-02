@@ -20,18 +20,20 @@ make test
 ```
 
 ### What it covers
+
 - All fast-running unit tests under `src/**/__tests__/`
 - Optional integration specs when the Supabase env vars are present (see next section)
 
 ### Limitations
+
 - Does **not** start Docker or provision a database on its own. If `.env.test` points at the Compose database, you must have that container running already.
 
 ## Unit vs. Integration Tests
 
-| Type              | How to run                                    | Dependencies                        | Purpose                                                       | When to run                                                  |
-|-------------------|-----------------------------------------------|-------------------------------------|----------------------------------------------------------------|--------------------------------------------------------------|
-| **Unit tests**     | `make test`                                   | None beyond local Node environment  | Validate isolated logic (chunking, route handlers, helpers).   | Whenever you change application code; ideal inner loop.      |
-| **Integration tests** | `make test-with-docker` (or `make test` with Supabase env vars pointing at an existing DB) | Real Postgres instance or the Compose Supabase container | Exercise Supabase vector store behaviour end-to-end.         | After schema changes, Supabase pipeline tweaks, or before merging.
+| Type                  | How to run                                                                                 | Dependencies                                             | Purpose                                                      | When to run                                                        |
+| --------------------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------------ |
+| **Unit tests**        | `make test`                                                                                | None beyond local Node environment                       | Validate isolated logic (chunking, route handlers, helpers). | Whenever you change application code; ideal inner loop.            |
+| **Integration tests** | `make test-with-docker` (or `make test` with Supabase env vars pointing at an existing DB) | Real Postgres instance or the Compose Supabase container | Exercise Supabase vector store behaviour end-to-end.         | After schema changes, Supabase pipeline tweaks, or before merging. |
 
 - **Speed**: unit tests complete in seconds and require no external services. Integration tests take longer because they connect to Postgres and run the ingestion/search flow.
 - **Isolation**: keep integration tests pointed at disposable databases (such as the Docker-backed stack) to avoid mutating dev data.
@@ -46,6 +48,7 @@ make test-with-docker
 ```
 
 ### What happens under the hood
+
 1. `docker compose` launches the `supabase` and `migrate` services under the isolated project name `vectordb_test`.
 2. The migration waits for the health check and runs `infra/supabase/0001_init.sql`.
 3. The target reuses `make test`, so the Node suite runs with `.env.test`.
@@ -54,10 +57,12 @@ make test-with-docker
 > **Note:** The application service container is not started for this loop. The Node tests run on your host machine (or CI runner) and connect directly to the temporary Supabase instance, so there is no need to launch `service` unless you want to perform manual end-to-end checks.
 
 ### Why it is safe for development
+
 - Containers use the prefix `vectordb_test_*`, so they do not collide with the default development containers (`vectordb_*`).
 - The Compose project name is also set to `vectordb_test`, which keeps the lifecycle completely separate from the dev stack.
 
 ### When to prefer this loop
+
 - You want an end-to-end run against a fresh database without touching the development instance.
 - You are preparing to push changes that rely on the Supabase schema or vector search pipeline.
 

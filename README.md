@@ -31,6 +31,7 @@ make docker-down   # docker compose down
 make docker-clean  # docker compose down -v (remove volumes)
 make docker-supabase # start only the Supabase service with .env.docker
 ```
+
 - `POST /webhooks/google-drive` — Google Drive push notifications (expects Drive headers)
 - `POST /search` — accepts `{ "query": string, "limit"?: number }` and returns matching chunks
 

@@ -41,6 +41,7 @@ Executes a semantic search against the configured vector store. The request text
     "limit": 5
   }
   ```
+
   - `query` (required): Natural language search text.
   - `limit` (optional): Maximum number of results to return. Must be a positive integer. Defaults to 5 if omitted or invalid.
 - **Success response:**
@@ -61,6 +62,7 @@ Executes a semantic search against the configured vector store. The request text
       ]
     }
     ```
+
     - `score` is a similarity score where larger values indicate a closer match.
     - `metadata` is optional and mirrors the metadata stored with the chunk.
 - **Error responses:**
