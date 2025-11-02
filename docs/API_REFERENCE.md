@@ -35,6 +35,7 @@ Executes a semantic search against the configured vector store. The request text
 
 - **Authentication:** None.
 - **Request body:**
+
   ```json
   {
     "query": "string (required)",
@@ -44,9 +45,11 @@ Executes a semantic search against the configured vector store. The request text
 
   - `query` (required): Natural language search text.
   - `limit` (optional): Maximum number of results to return. Must be a positive integer. Defaults to 5 if omitted or invalid.
+
 - **Success response:**
   - `200 OK`
   - Body:
+
     ```json
     {
       "results": [
@@ -65,6 +68,7 @@ Executes a semantic search against the configured vector store. The request text
 
     - `score` is a similarity score where larger values indicate a closer match.
     - `metadata` is optional and mirrors the metadata stored with the chunk.
+
 - **Error responses:**
   - `400 Bad Request` with `{ "error": "missing_query" }` if `query` is absent or empty.
   - `500 Internal Server Error` with `{ "error": "embedding_failure" }` if the embeddings provider fails.
