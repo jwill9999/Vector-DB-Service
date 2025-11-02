@@ -10,6 +10,7 @@ This microservice ingests Google Docs into a Supabase-backed vector store and ex
 - [Supabase Operations Guide](docs/SUPABASE_OPERATIONS.md)
 - [Deployment Playbook](docs/DEPLOYMENT_PLAYBOOK.md)
 - [Local Docker Workflow](docs/LOCAL_DOCKER.md)
+- [Testing Playbook](docs/TESTING.md)
 
 ## Quick Start
 

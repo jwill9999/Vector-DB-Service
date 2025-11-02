@@ -104,7 +104,7 @@ function createMockServices(embeddings: number[][], queryResults: unknown[]): Ap
       async upsertChunks() {},
       async deleteDocumentChunks() {},
       async queryByVector() {
-        return queryResults as any;
+        return queryResults as never;
       },
     },
   };

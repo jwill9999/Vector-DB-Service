@@ -1,7 +1,7 @@
 services:
   supabase:
     image: supabase/postgres:15.1.0.92
-    container_name: vectordb_supabase
+    container_name: ${CONTAINER_PREFIX:-vectordb}_supabase
     environment:
       POSTGRES_PASSWORD: postgres
     ports:
@@ -14,7 +14,7 @@ services:
 
   migrate:
     image: postgres:15
-    container_name: vectordb_migrate
+    container_name: ${CONTAINER_PREFIX:-vectordb}_migrate
     depends_on:
       supabase:
         condition: service_healthy
@@ -29,7 +29,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: vectordb_service
+    container_name: ${CONTAINER_PREFIX:-vectordb}_service
     env_file:
       - ${SERVICE_ENV_FILE:-.env.docker}
     ports:
