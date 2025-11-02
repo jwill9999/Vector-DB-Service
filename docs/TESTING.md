@@ -13,7 +13,7 @@ This guide walks through the testing options for the VectorDB ingestion service.
 
 ## Unit Test Loop (`make test`)
 
-Use `make test` for the fast feedback cycle. The target loads `.env.test` and then executes the Node test runner:
+Use `make test` for the fast feedback cycle. The target loads `.env.test` and then executes the Node test runner under `c8` for coverage:
 
 ```bash
 make test
@@ -23,6 +23,10 @@ make test
 
 - All fast-running unit tests under `src/**/__tests__/`
 - Optional integration specs when the Supabase env vars are present (see next section)
+
+`c8` prints a summary to stdout and stores HTML, LCOV, JSON, and text-summary artifacts under `coverage/` (ignored by Git).
+Open `coverage/index.html` in a browser for the interactive report, and publish `coverage/lcov.info` when downstream tooling (Codecov, Sonar, etc.) needs ingestible data.
+If you have already run `npm run build`, you can re-run coverage alone via `npm run test:coverage`.
 
 ### Limitations
 
