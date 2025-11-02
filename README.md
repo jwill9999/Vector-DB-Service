@@ -23,13 +23,13 @@ Use `make dev` while iterating locally.
 
 ### Essential Make Targets
 
-| Command                | Purpose                                                                                                   |
-| ---------------------- | --------------------------------------------------------------------------------------------------------- |
-| `make dev`             | Run the service locally with configuration from `.env`.                                                   |
-| `make docker-supabase` | Launch only the Supabase container for dedicated ingestion/search testing.                                |
-| `make docker`          | Bring up the full stack (service + Supabase) via Docker Compose.                                          |
-| `make test`            | Execute the Node test suite with `.env.test` exported.                                                     |
-| `make test-with-docker`| Provision Supabase via Docker, apply migrations, run `make test`, then tear down containers automatically. |
+| Command                 | Purpose                                                                                                    |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `make dev`              | Run the service locally with configuration from `.env`.                                                    |
+| `make docker-supabase`  | Launch only the Supabase container for dedicated ingestion/search testing.                                 |
+| `make docker`           | Bring up the full stack (service + Supabase) via Docker Compose.                                           |
+| `make test`             | Execute the Node test suite with `.env.test` exported.                                                     |
+| `make test-with-docker` | Provision Supabase via Docker, apply migrations, run `make test`, then tear down containers automatically. |
 
 - `POST /webhooks/google-drive` — Google Drive push notifications (expects Drive headers)
 - `POST /search` — accepts `{ "query": string, "limit"?: number }` and returns matching chunks
