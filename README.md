@@ -14,23 +14,22 @@ This microservice ingests Google Docs into a Supabase-backed vector store and ex
 
 ## Quick Start
 
+```bash
+make install  # npm install
+make dev      # build + start with environment sourced from .env
 ```
-make install       # npm install
-make build         # npm run build
-make start         # npm run start (requires prior build)
-make dev           # build + start with environment sourced from .env (default)
-make prod          # build + start with environment sourced from .env explicitly
-make lint          # npm run lint
-make format        # npm run format
-make test          # npm run test after loading .env.test
-make clean         # remove dist/
-make docker-build  # docker compose build using .env.docker
-make docker        # docker compose up --build using .env.docker
-make docker-prod   # docker compose up --build using .env
-make docker-down   # docker compose down
-make docker-clean  # docker compose down -v (remove volumes)
-make docker-supabase # start only the Supabase service with .env.docker
-```
+
+Use `make dev` while iterating locally.
+
+### Essential Make Targets
+
+| Command                | Purpose                                                                                                   |
+| ---------------------- | --------------------------------------------------------------------------------------------------------- |
+| `make dev`             | Run the service locally with configuration from `.env`.                                                   |
+| `make docker-supabase` | Launch only the Supabase container for dedicated ingestion/search testing.                                |
+| `make docker`          | Bring up the full stack (service + Supabase) via Docker Compose.                                          |
+| `make test`            | Execute the Node test suite with `.env.test` exported.                                                     |
+| `make test-with-docker`| Provision Supabase via Docker, apply migrations, run `make test`, then tear down containers automatically. |
 
 - `POST /webhooks/google-drive` — Google Drive push notifications (expects Drive headers)
 - `POST /search` — accepts `{ "query": string, "limit"?: number }` and returns matching chunks
@@ -63,29 +62,9 @@ Consult `.env.example` for the full list. For local runs: `export $(grep -v '^#'
 
 Within Docker there is no secondary override layer—the service container reads exactly the file supplied through `SERVICE_ENV_FILE`. Host commands export just the file you choose, so avoid chaining multiple env files unless you want the later exports to shadow earlier ones.
 
-## Makefile Commands
+## Essential Make Targets
 
-A `Makefile` wraps common tasks:
-
-```
-make install         # npm install
-make build           # npm run build
-make start           # npm run start (requires prior build)
-make dev             # build + start with ENV_FILE (.env by default)
-make prod            # build + start with .env (overridable via PROD_ENV_FILE)
-make docker          # docker compose up --build using .env.docker
-make docker-build    # docker compose build using .env.docker
-make docker-prod     # docker compose up --build using .env (PROD_ENV_FILE)
-make docker-down     # docker compose down
-make docker-clean    # docker compose down -v (remove volumes)
-make docker-supabase # compose up supabase only for integration tests
-make lint            # npm run lint
-make format          # npm run format
-make test            # node --test with .env.test exported first
-make clean           # remove dist/
-```
-
-Use `make dev` while iterating—it exports `.env`, builds, and launches the service.
+Reference the table above for the most common workflows. Additional commands live in the `Makefile` and supporting docs under `docs/`.
 
 ## Google Drive Watch Setup
 
