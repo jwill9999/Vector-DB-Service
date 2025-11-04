@@ -133,7 +133,7 @@ The following badges are displayed in README.md and update automatically:
 **Code Coverage:**
 
 ```markdown
-[![codecov](https://codecov.io/gh/jwill9999/Vector-DB-Service/graph/badge.svg?token=)](https://codecov.io/gh/jwill9999/Vector-DB-Service)
+[![codecov](https://codecov.io/gh/jwill9999/Vector-DB-Service/graph/badge.svg)](https://codecov.io/gh/jwill9999/Vector-DB-Service)
 ```
 
 These badges are already included in the README and will display:
