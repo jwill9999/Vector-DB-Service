@@ -4,7 +4,7 @@ import { EnvironmentName } from "./config.js";
 
 export function createLogger(env: EnvironmentName) {
   const isDevelopment = env === "development";
-  
+
   return pino({
     level: process.env.LOG_LEVEL || (env === "test" ? "silent" : "info"),
     transport: isDevelopment
