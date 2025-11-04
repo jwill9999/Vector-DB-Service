@@ -21,8 +21,9 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "commit": "npm run format && npm run lint:fix",
-    "test": "npm run build && npm run test:coverage",
-    "test:coverage": "c8 --reporter=text --reporter=text-summary --reporter=lcov --reporter=html --reporter=json-summary node --test \"dist/**/*.test.js\""
+    "test": "npm run build && npm run test:run",
+    "test:run": "node --test dist/routes/__tests__/*.test.js dist/services/supabase/__tests__/*.test.js",
+    "test:coverage": "c8 --reporter=text --reporter=text-summary --reporter=lcov --reporter=html --reporter=json-summary npm run test:run"
   },
   "keywords": [
     "vector",

@@ -278,17 +278,11 @@ class NoopVectorStore implements VectorStore {
   }
 
   async upsertChunks(chunks: VectorStoreDocumentChunk[]): Promise<void> {
-    this.logger.warn(
-      { chunkCount: chunks.length },
-      "Supabase not configured; skipping chunks"
-    );
+    this.logger.warn({ chunkCount: chunks.length }, "Supabase not configured; skipping chunks");
   }
 
   async deleteDocumentChunks(documentId: string): Promise<void> {
-    this.logger.warn(
-      { documentId },
-      "Supabase not configured; cannot delete chunks for document"
-    );
+    this.logger.warn({ documentId }, "Supabase not configured; cannot delete chunks for document");
   }
 
   async queryByVector(): Promise<VectorStoreQueryResult[]> {
