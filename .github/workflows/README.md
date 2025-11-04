@@ -34,16 +34,20 @@ This directory contains the CI/CD workflows for the Vector-DB-Service project.
 - **Bundle Size Check**: Reports bundle size and warns if > 10MB
 - **Dependency Audit**: Runs `npm audit` and checks for outdated packages
 
-### 🔒 CodeQL Security Analysis (`codeql.yml`)
+## Security Scanning
 
-**Triggers:** Push to main/develop, PRs, Weekly schedule (Monday 00:00 UTC)
+### 🔒 CodeQL Security Analysis
 
-**Jobs:**
+**Note:** This repository uses GitHub's **default CodeQL setup** for security scanning, which is enabled in repository settings under **Code security and analysis**.
 
-- **Security Analysis**: Scans TypeScript/JavaScript code for security vulnerabilities using CodeQL
-- Analyzes source TypeScript files directly (no build required)
-- Runs both security and quality queries
-- Results available in GitHub Security tab
+The default setup:
+- Automatically scans TypeScript/JavaScript code for security vulnerabilities
+- Runs on every push and pull request
+- Updates automatically with new security rules from GitHub
+- Requires no workflow file or configuration
+- Results available in the GitHub Security tab
+
+**No custom workflow needed** - GitHub manages this automatically.
 
 ## Dependabot
 
@@ -113,6 +117,5 @@ Add to README.md:
 
 ```markdown
 [![CI](https://github.com/jwill9999/Vector-DB-Service/workflows/CI/badge.svg)](https://github.com/jwill9999/Vector-DB-Service/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/jwill9999/Vector-DB-Service/workflows/CodeQL%20Security%20Analysis/badge.svg)](https://github.com/jwill9999/Vector-DB-Service/actions/workflows/codeql.yml)
 [![codecov](https://codecov.io/gh/jwill9999/Vector-DB-Service/branch/main/graph/badge.svg)](https://codecov.io/gh/jwill9999/Vector-DB-Service)
 ```
