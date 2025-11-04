@@ -1,6 +1,6 @@
 import pino from "pino";
 
-import { EnvironmentName } from "./config.js";
+import { EnvironmentName } from "../types.js";
 
 export function createLogger(env: EnvironmentName) {
   const isDevelopment = env === "development";
