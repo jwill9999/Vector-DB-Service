@@ -62,12 +62,20 @@ Dependabot is configured to:
 
 ## Setup Requirements
 
-### Codecov (Optional)
+### Codecov
 
-To enable coverage reporting:
+Code coverage reporting is integrated into the CI workflow and displays a badge on the README.
 
-1. Sign up at [codecov.io](https://codecov.io)
-2. Add `CODECOV_TOKEN` to repository secrets
+**Setup Requirements:**
+
+1. Sign up at [codecov.io](https://codecov.io) and connect your GitHub repository
+2. Add `CODECOV_TOKEN` to repository secrets:
+   - Go to Repository Settings → Secrets and variables → Actions
+   - Add a new secret named `CODECOV_TOKEN`
+   - Copy the token from your Codecov dashboard (Settings → Global Upload Token)
+3. The coverage badge will update automatically after each CI run on the main branch
+
+**Badge URL:** The Codecov badge in README.md displays the current coverage percentage and links to detailed coverage reports.
 
 ### Branch Protection Rules (Recommended)
 
@@ -114,9 +122,21 @@ npx tsc --noEmit
 
 ## Workflow Status Badges
 
-Add to README.md:
+The following badges are displayed in README.md and update automatically:
+
+**CI Workflow:**
 
 ```markdown
 [![CI](https://github.com/jwill9999/Vector-DB-Service/workflows/CI/badge.svg)](https://github.com/jwill9999/Vector-DB-Service/actions/workflows/ci.yml)
+```
+
+**Code Coverage:**
+
+```markdown
 [![codecov](https://codecov.io/gh/jwill9999/Vector-DB-Service/branch/main/graph/badge.svg)](https://codecov.io/gh/jwill9999/Vector-DB-Service)
 ```
+
+These badges are already included in the README and will display:
+
+- **CI Badge**: Shows the status of the latest CI workflow run (passing/failing)
+- **Codecov Badge**: Shows the current code coverage percentage (requires CODECOV_TOKEN to be configured)
