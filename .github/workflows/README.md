@@ -127,16 +127,16 @@ The following badges are displayed in README.md and update automatically:
 **CI Workflow:**
 
 ```markdown
-[![CI](https://github.com/jwill9999/Vector-DB-Service/workflows/CI/badge.svg)](https://github.com/jwill9999/Vector-DB-Service/actions/workflows/ci.yml)
+[![CI](https://github.com/jwill9999/Vector-DB-Service/actions/workflows/ci.yml/badge.svg)](https://github.com/jwill9999/Vector-DB-Service/actions/workflows/ci.yml)
 ```
 
 **Code Coverage:**
 
 ```markdown
-[![codecov](https://codecov.io/gh/jwill9999/Vector-DB-Service/branch/main/graph/badge.svg)](https://codecov.io/gh/jwill9999/Vector-DB-Service)
+[![codecov](https://codecov.io/gh/jwill9999/Vector-DB-Service/graph/badge.svg?token=)](https://codecov.io/gh/jwill9999/Vector-DB-Service)
 ```
 
 These badges are already included in the README and will display:
 
-- **CI Badge**: Shows the status of the latest CI workflow run (passing/failing)
-- **Codecov Badge**: Shows the current code coverage percentage (requires CODECOV_TOKEN to be configured)
+- **CI Badge**: Shows the status of the latest CI workflow run across all branches (passing/failing)
+- **Codecov Badge**: Shows the current code coverage percentage (requires CODECOV_TOKEN to be configured and repository setup on Codecov)
