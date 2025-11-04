@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import test from "node:test";
 
-import { AppConfig } from "../../../config.js";
+import { AppConfig } from "../../../utils/config.js";
 import { createSupabaseVectorStore } from "../vectorStore.js";
 
 const parsedDimension = process.env.SUPABASE_TEST_EMBEDDING_DIMENSIONS

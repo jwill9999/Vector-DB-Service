@@ -1,7 +1,8 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 
-import { AppConfig } from "../config.js";
 import { AppServices } from "../services/types.js";
+import { AppConfig } from "../utils/config.js";
+import { Logger } from "../utils/logger.js";
 
 export interface RouteContext {
   req: IncomingMessage;
@@ -10,6 +11,7 @@ export interface RouteContext {
   services: AppServices;
   body: unknown;
   searchParams: URLSearchParams;
+  logger: Logger;
 }
 
 export type RouteHandler = (context: RouteContext) => Promise<void> | void;

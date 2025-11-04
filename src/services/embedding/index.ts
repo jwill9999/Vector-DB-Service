@@ -1,5 +1,6 @@
-import { AppConfig } from "../../config.js";
+import { AppConfig } from "../../utils/config.js";
 import { EmbeddingService } from "../types.js";
+
 import { OpenAIEmbeddingService } from "./openaiEmbeddingService.js";
 
 class ZeroVectorEmbeddingService implements EmbeddingService {

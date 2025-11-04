@@ -1,7 +1,7 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { Pool } from "pg";
 
-import { AppConfig } from "../../config.js";
+import { AppConfig } from "../../utils/config.js";
 import {
   VectorStore,
   VectorStoreDocument,
