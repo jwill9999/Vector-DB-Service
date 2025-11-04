@@ -33,7 +33,7 @@
   "author": "Jason Williams",
   "license": "MIT",
   "dependencies": {
-    "@supabase/supabase-js": "^2.44.2",
+    "@supabase/supabase-js": "^2.78.0",
     "googleapis": "^131.0.0",
     "openai": "^4.59.1",
     "pg": "^8.16.3",
