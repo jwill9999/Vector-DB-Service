@@ -41,6 +41,7 @@ This directory contains the CI/CD workflows for the Vector-DB-Service project.
 **Note:** This repository uses GitHub's **default CodeQL setup** for security scanning, which is enabled in repository settings under **Code security and analysis**.
 
 The default setup:
+
 - Automatically scans TypeScript/JavaScript code for security vulnerabilities
 - Runs on every push and pull request
 - Updates automatically with new security rules from GitHub
