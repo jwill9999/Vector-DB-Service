@@ -40,7 +40,8 @@ This directory contains the CI/CD workflows for the Vector-DB-Service project.
 
 **Jobs:**
 
-- **Security Analysis**: Scans code for security vulnerabilities using CodeQL
+- **Security Analysis**: Scans TypeScript/JavaScript code for security vulnerabilities using CodeQL
+- Analyzes source TypeScript files directly (no build required)
 - Runs both security and quality queries
 - Results available in GitHub Security tab
 
