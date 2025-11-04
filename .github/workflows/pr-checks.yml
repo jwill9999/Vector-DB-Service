@@ -1,0 +1,91 @@
+name: Pull Request Checks
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  pr-validation:
+    name: PR Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for better analysis
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check for uncommitted changes
+        run: |
+          npm run build
+          git diff --exit-code || (echo "Build produced uncommitted changes" && exit 1)
+
+      - name: Verify no console.log in source
+        run: |
+          if grep -r "console\.log\|console\.debug" src/ --include="*.ts" --exclude-dir=__tests__ --exclude="*.test.ts"; then
+            echo "Found console.log or console.debug statements in source code. Please use structured logging instead."
+            exit 1
+          fi
+          echo "No console.log/debug found - using structured logging ✓"
+
+      - name: Check package-lock.json is up to date
+        run: |
+          npm install --package-lock-only
+          git diff --exit-code package-lock.json || (echo "package-lock.json is out of date. Please run 'npm install' and commit the changes." && exit 1)
+
+  size-check:
+    name: Bundle Size Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Check bundle size
+        run: |
+          DIST_SIZE=$(du -sb dist | cut -f1)
+          echo "Bundle size: $(($DIST_SIZE / 1024)) KB"
+          if [ $DIST_SIZE -gt 10485760 ]; then
+            echo "Warning: Bundle size exceeds 10MB"
+          fi
+
+  dependency-audit:
+    name: Dependency Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Run npm audit
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+
+      - name: Check for outdated dependencies
+        run: npm outdated || true

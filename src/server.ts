@@ -6,12 +6,14 @@ import {
 } from "node:http";
 import { URL } from "node:url";
 
-import { AppConfig } from "./config.js";
+import { handleRouteError } from "./middleware/errorHandler.js";
 import { RouteDefinition, routes } from "./routes/index.js";
 import { RouteContext } from "./routes/types.js";
 import { AppServices } from "./services/types.js";
+import { AppConfig } from "./utils/config.js";
+import { Logger } from "./utils/logger.js";
 
-export function createServer(config: AppConfig, services: AppServices): HttpServer {
+export function createServer(config: AppConfig, services: AppServices, logger: Logger): HttpServer {
   const server = createHttpServer(async (req, res) => {
     if (!req.url || !req.method) {
       sendNotFound(res);
@@ -34,11 +36,12 @@ export function createServer(config: AppConfig, services: AppServices): HttpServ
         services,
         body,
         searchParams,
+        logger,
       };
 
       await routeMatch.route.handler(context);
     } catch (error) {
-      handleRouteError(res, error);
+      handleRouteError(res, error, logger);
     }
   });
 
@@ -46,7 +49,7 @@ export function createServer(config: AppConfig, services: AppServices): HttpServ
     const address = server.address();
     if (typeof address === "object" && address) {
       const host = address.address === "::" ? config.host : address.address;
-      console.log(`service listening on http://${host}:${address.port}`);
+      logger.info({ host, port: address.port }, "service listening");
     }
   });
 
@@ -93,17 +96,6 @@ async function readBody(req: IncomingMessage): Promise<unknown> {
   }
 
   return buffer;
-}
-
-function handleRouteError(res: ServerResponse, error: unknown): void {
-  console.error("route error", error);
-  if (res.writableEnded) {
-    return;
-  }
-
-  res.statusCode = 500;
-  res.setHeader("content-type", "application/json; charset=utf-8");
-  res.end(JSON.stringify({ error: "internal_error" }));
 }
 
 function sendNotFound(res: ServerResponse): void {

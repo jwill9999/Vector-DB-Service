@@ -2,7 +2,8 @@ import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import test from "node:test";
 
-import { AppConfig } from "../../../config.js";
+import { AppConfig } from "../../../utils/config.js";
+import { createLogger } from "../../../utils/logger.js";
 import { createSupabaseVectorStore } from "../vectorStore.js";
 
 const parsedDimension = process.env.SUPABASE_TEST_EMBEDDING_DIMENSIONS
@@ -48,7 +49,8 @@ const integrationConfig: AppConfig = {
 };
 
 test("supabase vector store upsert and query", { skip: missingEnv }, async () => {
-  const store = createSupabaseVectorStore(integrationConfig);
+  const logger = createLogger(integrationConfig.env);
+  const store = createSupabaseVectorStore(integrationConfig, logger);
   const documentId = randomUUID();
 
   await store.upsertDocument({
@@ -82,14 +84,18 @@ test("supabase vector store upsert and query", { skip: missingEnv }, async () =>
 });
 
 test("supabase vector store fallback when credentials missing", async () => {
-  const store = createSupabaseVectorStore({
-    ...integrationConfig,
-    supabase: {
-      ...integrationConfig.supabase,
-      url: undefined,
-      serviceRoleKey: undefined,
+  const logger = createLogger(integrationConfig.env);
+  const store = createSupabaseVectorStore(
+    {
+      ...integrationConfig,
+      supabase: {
+        ...integrationConfig.supabase,
+        url: undefined,
+        serviceRoleKey: undefined,
+      },
     },
-  });
+    logger
+  );
 
   await assert.doesNotReject(async () => {
     await store.upsertDocument({

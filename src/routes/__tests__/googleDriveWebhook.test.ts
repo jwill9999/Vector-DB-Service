@@ -1,11 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { AppConfig } from "../../config.js";
-import { googleDriveWebhookHandler } from "../googleDriveWebhook.js";
-import { RouteContext } from "../types.js";
 import { AppServices, IngestionRequest } from "../../services/types.js";
 import { createMockRequest, createMockResponse } from "../../testing/httpMocks.js";
+import { AppConfig } from "../../utils/config.js";
+import { createLogger } from "../../utils/logger.js";
+import { googleDriveWebhookHandler } from "../googleDriveWebhook.js";
+import { RouteContext } from "../types.js";
 
 function createTestConfig(): AppConfig {
   return {
@@ -42,6 +43,7 @@ function createTestConfig(): AppConfig {
 
 test("rejects webhook requests with invalid verification token", async () => {
   const config = createTestConfig();
+  const logger = createLogger(config.env);
   const enqueueCalls: IngestionRequest[] = [];
   const services = createMockServices(enqueueCalls);
 
@@ -54,6 +56,7 @@ test("rejects webhook requests with invalid verification token", async () => {
     services,
     body: { fileId: "123" },
     searchParams: new URLSearchParams(),
+    logger,
   };
 
   await googleDriveWebhookHandler(context);
@@ -65,6 +68,7 @@ test("rejects webhook requests with invalid verification token", async () => {
 
 test("enqueues ingestion when payload contains fileId", async () => {
   const config = createTestConfig();
+  const logger = createLogger(config.env);
   const enqueueCalls: IngestionRequest[] = [];
   const services = createMockServices(enqueueCalls);
 
@@ -77,6 +81,7 @@ test("enqueues ingestion when payload contains fileId", async () => {
     services,
     body: { fileId: "abc123" },
     searchParams: new URLSearchParams(),
+    logger,
   };
 
   await googleDriveWebhookHandler(context);

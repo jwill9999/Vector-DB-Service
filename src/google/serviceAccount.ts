@@ -1,7 +1,7 @@
-import { google } from "googleapis";
 import { JWT } from "google-auth-library";
+import { google } from "googleapis";
 
-import { AppConfig } from "../config.js";
+import { AppConfig } from "../utils/config.js";
 
 const DOCS_SCOPE = "https://www.googleapis.com/auth/documents.readonly";
 const DRIVE_SCOPE = "https://www.googleapis.com/auth/drive.readonly";
