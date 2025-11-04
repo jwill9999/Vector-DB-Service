@@ -1,14 +1,15 @@
 import { randomUUID } from "node:crypto";
 
-import { AppConfig } from "../config.js";
 import { GoogleDocumentFetcher } from "../google/docsService.js";
-import { chunkDocument } from "./chunk.js";
 import {
   EmbeddingService,
   IngestionPipeline,
   IngestionRequest,
   VectorStore,
 } from "../services/types.js";
+import { AppConfig } from "../utils/config.js";
+
+import { chunkDocument } from "./chunk.js";
 
 const SOURCE_GOOGLE_DOCS = "google-docs";
 

@@ -1,4 +1,5 @@
 import { openApiDocument } from "../openapi.js";
+
 import { RouteHandler } from "./types.js";
 
 export const openApiHandler: RouteHandler = ({ res }) => {

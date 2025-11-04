@@ -1,11 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { AppConfig } from "../../config.js";
-import { searchHandler } from "../search.js";
-import { RouteContext } from "../types.js";
 import { AppServices } from "../../services/types.js";
 import { createMockRequest, createMockResponse } from "../../testing/httpMocks.js";
+import { AppConfig } from "../../utils/config.js";
+import { createLogger } from "../../utils/logger.js";
+import { searchHandler } from "../search.js";
+import { RouteContext } from "../types.js";
 
 const BASE_CONFIG: AppConfig = {
   env: "test",
@@ -39,6 +40,7 @@ const BASE_CONFIG: AppConfig = {
 };
 
 test("returns 400 when query is missing", async () => {
+  const logger = createLogger(BASE_CONFIG.env);
   const services = createMockServices([], []);
   const req = createMockRequest();
   const { response, state } = createMockResponse();
@@ -49,6 +51,7 @@ test("returns 400 when query is missing", async () => {
     services,
     body: {},
     searchParams: new URLSearchParams(),
+    logger,
   };
 
   await searchHandler(context);
@@ -58,6 +61,7 @@ test("returns 400 when query is missing", async () => {
 });
 
 test("embeds query and returns vector results", async () => {
+  const logger = createLogger(BASE_CONFIG.env);
   const embeddings: number[][] = [[0.1, 0.2, 0.3]];
   const results = [
     {
@@ -79,6 +83,7 @@ test("embeds query and returns vector results", async () => {
     services,
     body: { query: "hello world", limit: 1 },
     searchParams: new URLSearchParams(),
+    logger,
   };
 
   await searchHandler(context);
