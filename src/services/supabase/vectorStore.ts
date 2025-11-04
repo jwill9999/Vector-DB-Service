@@ -2,6 +2,7 @@ import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { Pool } from "pg";
 
 import { AppConfig } from "../../utils/config.js";
+import { Logger } from "../../utils/logger.js";
 import {
   VectorStore,
   VectorStoreDocument,
@@ -267,33 +268,44 @@ interface SupabaseMatchRow {
 }
 
 class NoopVectorStore implements VectorStore {
+  constructor(private readonly logger: Logger) {}
+
   async upsertDocument(document: VectorStoreDocument): Promise<void> {
-    console.warn(`Supabase not configured; skipping document ${document.documentId}`);
+    this.logger.warn(
+      { documentId: document.documentId },
+      "Supabase not configured; skipping document"
+    );
   }
 
   async upsertChunks(chunks: VectorStoreDocumentChunk[]): Promise<void> {
-    console.warn(`Supabase not configured; skipping ${chunks.length} chunk(s).`);
+    this.logger.warn(
+      { chunkCount: chunks.length },
+      "Supabase not configured; skipping chunks"
+    );
   }
 
   async deleteDocumentChunks(documentId: string): Promise<void> {
-    console.warn(`Supabase not configured; cannot delete chunks for document ${documentId}.`);
+    this.logger.warn(
+      { documentId },
+      "Supabase not configured; cannot delete chunks for document"
+    );
   }
 
   async queryByVector(): Promise<VectorStoreQueryResult[]> {
-    console.warn("Supabase not configured; returning no results.");
+    this.logger.warn("Supabase not configured; returning no results.");
     return [];
   }
 }
 
-export function createSupabaseVectorStore(config: AppConfig): VectorStore {
+export function createSupabaseVectorStore(config: AppConfig, logger: Logger): VectorStore {
   const { url, serviceRoleKey, directUrl } = config.supabase;
 
   if (url && serviceRoleKey) {
     try {
       return new SupabaseVectorStore(config.supabase);
     } catch (error) {
-      console.error("Failed to initialize Supabase vector store", error);
-      return new NoopVectorStore();
+      logger.error({ err: error }, "Failed to initialize Supabase vector store");
+      return new NoopVectorStore(logger);
     }
   }
 
@@ -301,13 +313,13 @@ export function createSupabaseVectorStore(config: AppConfig): VectorStore {
     try {
       return new PostgresVectorStore(config.supabase);
     } catch (error) {
-      console.error("Failed to initialize Postgres vector store", error);
-      return new NoopVectorStore();
+      logger.error({ err: error }, "Failed to initialize Postgres vector store");
+      return new NoopVectorStore(logger);
     }
   }
 
-  console.warn("Supabase URL or service role key missing; using no-op vector store.");
-  return new NoopVectorStore();
+  logger.warn("Supabase URL or service role key missing; using no-op vector store.");
+  return new NoopVectorStore(logger);
 }
 
 function qualify(schema: string, identifier: string): string {

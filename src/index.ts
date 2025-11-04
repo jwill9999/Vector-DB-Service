@@ -6,7 +6,7 @@ import { createLogger } from "./utils/logger.js";
 async function bootstrap(): Promise<void> {
   const config = loadConfig();
   const logger = createLogger(config.env);
-  const services = createAppServices(config);
+  const services = createAppServices(config, logger);
   const server = createServer(config, services, logger);
   server.listen(config.port, config.host);
 }

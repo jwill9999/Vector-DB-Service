@@ -2,15 +2,16 @@ import { GoogleDocumentFetcher, GoogleDocsService } from "../google/docsService.
 import { createServiceAccountClient } from "../google/serviceAccount.js";
 import { createIngestionPipeline } from "../ingestion/pipeline.js";
 import { AppConfig } from "../utils/config.js";
+import { Logger } from "../utils/logger.js";
 
 import { createEmbeddingService } from "./embedding/index.js";
 import { createSupabaseVectorStore } from "./supabase/vectorStore.js";
 import { AppServices } from "./types.js";
 
-export function createAppServices(config: AppConfig): AppServices {
-  const embeddings = createEmbeddingService(config);
-  const vectorStore = createSupabaseVectorStore(config);
-  const docsService = createDocsFetcher(config);
+export function createAppServices(config: AppConfig, logger: Logger): AppServices {
+  const embeddings = createEmbeddingService(config, logger);
+  const vectorStore = createSupabaseVectorStore(config, logger);
+  const docsService = createDocsFetcher(config, logger);
   const ingestion = createIngestionPipeline(config, { docsService, embeddings, vectorStore });
 
   return {
@@ -20,16 +21,14 @@ export function createAppServices(config: AppConfig): AppServices {
   };
 }
 
-function createDocsFetcher(config: AppConfig): GoogleDocumentFetcher {
+function createDocsFetcher(config: AppConfig, logger: Logger): GoogleDocumentFetcher {
   try {
     const authClient = createServiceAccountClient(config);
     return new GoogleDocsService(authClient, config.googleDrive.watchFolderId);
   } catch (error) {
-    // Fail fast when credentials are missing so webhook handlers surface useful errors.
-    // Note: This is intentionally not using structured logging as logger is not available here
-    console.warn(
-      "Google service account unavailable; ingestion will fail until configured.",
-      error
+    logger.warn(
+      { err: error },
+      "Google service account unavailable; ingestion will fail until configured."
     );
     return {
       async fetchDocument(): Promise<never> {

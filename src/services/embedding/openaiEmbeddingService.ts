@@ -2,6 +2,7 @@ import crypto from "node:crypto";
 
 import OpenAI from "openai";
 
+import { Logger } from "../../utils/logger.js";
 import { EmbeddingService } from "../types.js";
 
 export interface OpenAIEmbeddingOptions {
@@ -15,7 +16,10 @@ const DEFAULT_BATCH_SIZE = 64;
 export class OpenAIEmbeddingService implements EmbeddingService {
   private readonly client?: OpenAI;
 
-  constructor(private readonly options: OpenAIEmbeddingOptions) {
+  constructor(
+    private readonly options: OpenAIEmbeddingOptions,
+    private readonly logger: Logger
+  ) {
     if (options.apiKey) {
       this.client = new OpenAI({ apiKey: options.apiKey });
     }
@@ -23,7 +27,7 @@ export class OpenAIEmbeddingService implements EmbeddingService {
 
   async embedText(input: string[]): Promise<number[][]> {
     if (!this.client) {
-      console.warn("OPENAI_API_KEY not set; returning deterministic placeholder embeddings.");
+      this.logger.warn("OPENAI_API_KEY not set; returning deterministic placeholder embeddings.");
       // Non-production fallback: hashes input to stable vectors so tests can run without real API calls.
       return input.map((text) => this.generateDeterministicVector(text));
     }

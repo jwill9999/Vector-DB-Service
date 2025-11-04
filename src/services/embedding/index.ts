@@ -1,4 +1,5 @@
 import { AppConfig } from "../../utils/config.js";
+import { Logger } from "../../utils/logger.js";
 import { EmbeddingService } from "../types.js";
 
 import { OpenAIEmbeddingService } from "./openaiEmbeddingService.js";
@@ -11,19 +12,23 @@ class ZeroVectorEmbeddingService implements EmbeddingService {
   }
 }
 
-export function createEmbeddingService(config: AppConfig): EmbeddingService {
+export function createEmbeddingService(config: AppConfig, logger: Logger): EmbeddingService {
   const dimensions = config.supabase.embeddingDimensions;
 
   if (config.embeddings.provider === "openai") {
-    return new OpenAIEmbeddingService({
-      apiKey: config.embeddings.openai.apiKey,
-      model: config.embeddings.openai.model,
-      dimensions,
-    });
+    return new OpenAIEmbeddingService(
+      {
+        apiKey: config.embeddings.openai.apiKey,
+        model: config.embeddings.openai.model,
+        dimensions,
+      },
+      logger
+    );
   }
 
-  console.warn(
-    `Unknown embedding provider "${config.embeddings.provider}"; using zero-vector stub.`
+  logger.warn(
+    { provider: config.embeddings.provider },
+    "Unknown embedding provider; using zero-vector stub."
   );
   return new ZeroVectorEmbeddingService(dimensions);
 }
