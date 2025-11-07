@@ -31,8 +31,8 @@ Use `make dev` while iterating locally.
 | `make dev`              | Run the service locally with configuration from `.env`.                                                    |
 | `make docker-supabase`  | Launch only the Supabase container for dedicated ingestion/search testing.                                 |
 | `make docker`           | Bring up the full stack (service + Supabase) via Docker Compose.                                           |
-| `make test`             | Execute the Node test suite with `.env.test` exported.                                                     |
-| `make test-with-docker` | Provision Supabase via Docker, apply migrations, run `make test`, then tear down containers automatically. |
+| `make test-unit`        | Execute unit tests with Vitest.                                                                            |
+| `make test-with-docker` | Provision Supabase via Docker, apply migrations, run integration tests, then tear down containers automatically. |
 
 - `POST /webhooks/google-drive` — Google Drive push notifications (expects Drive headers)
 - `POST /search` — accepts `{ "query": string, "limit"?: number }` and returns matching chunks
@@ -99,8 +99,9 @@ psql "$SUPABASE_URL" -f infra/supabase/0001_init.sql
 ## Development Notes
 
 - The service runs on Node 20+ targeting ES2022 modules.
-- Unit tests use Node’s built-in test runner (`node --test`). Integration coverage for Supabase lives in `src/services/supabase/__tests__/` and auto-skips without credentials.
+- Unit and integration tests use Vitest. Unit tests cover route handlers and business logic. Integration tests verify Supabase vector store operations with a real database.
 - Routes are defined in `src/routes`. Handlers receive parsed JSON bodies through the shared `RouteContext`.
 - Chunks include heading metadata and source URIs. Downstream clients can use this to construct user-facing references.
+- Coverage reports are generated automatically by the CI pipeline and displayed via the Codecov badge above.
 
 Feel free to extend the Makefile and documentation under `docs/` as new tooling or endpoints arrive.
