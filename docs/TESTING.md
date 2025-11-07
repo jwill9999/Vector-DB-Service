@@ -95,4 +95,8 @@ Remember to update `.env.test` if you change ports or connection strings in `doc
 - **Migrations fail**: Inspect the `migrate` container logs (`docker compose logs migrate`) to see the Postgres error. The stack will stay up until the trap runs, so you can debug interactively.
 - **Integration tests skipped**: Check that the Supabase env vars are present in `.env.test`—the Node test runner logs a skip message when they are missing.
 
-For more detail on running the service in Docker, see `docs/LOCAL_DOCKER.md`. For Supabase schema operations, refer to `docs/SUPABASE_OPERATIONS.md`.
+## Related Documentation
+
+- [Test Coverage Roadmap](./TEST_COVERAGE.md) - Coverage status and improvement plan
+- [Local Docker Workflow](./LOCAL_DOCKER.md) - Running services locally with Docker
+- [Supabase Operations](./SUPABASE_OPERATIONS.md) - Database operations and schema management

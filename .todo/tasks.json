@@ -1,3 +1,120 @@
 {
-  "tasks": []
+  "tasks": [
+    {
+      "id": "test-coverage-001",
+      "title": "Add unit tests for chunking logic",
+      "description": "Write unit tests for src/ingestion/chunk.ts to cover text chunking, heading detection, and metadata extraction. Target: 80%+ coverage.",
+      "priority": "high",
+      "category": "testing",
+      "status": "todo",
+      "estimatedHours": 4,
+      "dependencies": [],
+      "files": [
+        "src/ingestion/chunk.ts",
+        "tests/unit/chunk.test.ts"
+      ]
+    },
+    {
+      "id": "test-coverage-002",
+      "title": "Add unit tests for embedding service",
+      "description": "Write unit tests for src/services/embedding/openaiEmbeddingService.ts with mocked OpenAI API calls. Test batch processing, error handling, and retry logic. Target: 80%+ coverage.",
+      "priority": "high",
+      "category": "testing",
+      "status": "todo",
+      "estimatedHours": 3,
+      "dependencies": [],
+      "files": [
+        "src/services/embedding/openaiEmbeddingService.ts",
+        "tests/unit/embedding.test.ts"
+      ]
+    },
+    {
+      "id": "test-coverage-003",
+      "title": "Add integration tests for ingestion pipeline",
+      "description": "Write integration tests for src/ingestion/pipeline.ts covering the full flow: fetch doc -> chunk -> embed -> upsert to Supabase. Use Docker Supabase and mock Google Docs. Target: 75%+ coverage.",
+      "priority": "medium",
+      "category": "testing",
+      "status": "todo",
+      "estimatedHours": 6,
+      "dependencies": ["test-coverage-001", "test-coverage-002"],
+      "files": [
+        "src/ingestion/pipeline.ts",
+        "tests/integration/pipeline.test.ts"
+      ]
+    },
+    {
+      "id": "test-coverage-004",
+      "title": "Add unit tests for remaining route handlers",
+      "description": "Write unit tests for src/routes/health.ts and src/routes/docs.ts. Test health check response and OpenAPI doc serving. Target: 90%+ coverage.",
+      "priority": "low",
+      "category": "testing",
+      "status": "todo",
+      "estimatedHours": 2,
+      "dependencies": [],
+      "files": [
+        "src/routes/health.ts",
+        "src/routes/docs.ts",
+        "tests/unit/health.test.ts",
+        "tests/unit/docs.test.ts"
+      ]
+    },
+    {
+      "id": "test-coverage-005",
+      "title": "Add E2E tests for HTTP server",
+      "description": "Write E2E tests for src/server.ts using supertest. Test request routing, error handling, JSON parsing, and middleware execution. Target: 70%+ coverage.",
+      "priority": "medium",
+      "category": "testing",
+      "status": "todo",
+      "estimatedHours": 5,
+      "dependencies": [],
+      "files": [
+        "src/server.ts",
+        "tests/e2e/server.test.ts"
+      ]
+    },
+    {
+      "id": "test-coverage-006",
+      "title": "Add unit tests for Google Docs service",
+      "description": "Write unit tests for src/google/docsService.ts and src/google/serviceAccount.ts with mocked Google APIs. Test document fetching, authentication, and error handling. Target: 75%+ coverage.",
+      "priority": "medium",
+      "category": "testing",
+      "status": "todo",
+      "estimatedHours": 4,
+      "dependencies": [],
+      "files": [
+        "src/google/docsService.ts",
+        "src/google/serviceAccount.ts",
+        "tests/unit/google.test.ts"
+      ]
+    },
+    {
+      "id": "test-coverage-007",
+      "title": "Add unit tests for vector store implementations",
+      "description": "Write unit tests for src/services/supabase/postgresVectorStore.ts and src/services/supabase/vectorStore.ts. Mock Postgres connections and Supabase client. Target: 70%+ coverage.",
+      "priority": "high",
+      "category": "testing",
+      "status": "todo",
+      "estimatedHours": 5,
+      "dependencies": [],
+      "files": [
+        "src/services/supabase/postgresVectorStore.ts",
+        "src/services/supabase/vectorStore.ts",
+        "tests/unit/vectorStore.test.ts"
+      ]
+    },
+    {
+      "id": "test-coverage-008",
+      "title": "Add unit tests for error handler middleware",
+      "description": "Write unit tests for src/middleware/errorHandler.ts. Test error catching, logging, and response formatting. Target: 90%+ coverage.",
+      "priority": "low",
+      "category": "testing",
+      "status": "todo",
+      "estimatedHours": 2,
+      "dependencies": [],
+      "files": [
+        "src/middleware/errorHandler.ts",
+        "tests/unit/errorHandler.test.ts"
+      ]
+    }
+  ]
 }
