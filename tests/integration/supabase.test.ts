@@ -1,9 +1,10 @@
-import { describe, it, expect } from 'vitest';
 import { randomUUID } from 'node:crypto';
 
+import { describe, it, expect } from 'vitest';
+
+import { createSupabaseVectorStore } from '../../src/services/supabase/vectorStore.js';
 import { AppConfig } from '../../src/utils/config.js';
 import { createLogger } from '../../src/utils/logger.js';
-import { createSupabaseVectorStore } from '../../src/services/supabase/vectorStore.js';
 
 const parsedDimension = process.env.SUPABASE_EMBEDDING_DIMENSIONS
   ? Number.parseInt(process.env.SUPABASE_EMBEDDING_DIMENSIONS, 10)

@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
 
+import { searchHandler } from '../../src/routes/search.js';
+import { RouteContext } from '../../src/routes/types.js';
 import { AppServices } from '../../src/services/types.js';
 import { createMockRequest, createMockResponse } from '../../src/testing/httpMocks.js';
 import { AppConfig } from '../../src/utils/config.js';
 import { createLogger } from '../../src/utils/logger.js';
-import { searchHandler } from '../../src/routes/search.js';
-import { RouteContext } from '../../src/routes/types.js';
 
 const BASE_CONFIG: AppConfig = {
   env: 'test',
