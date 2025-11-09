@@ -58,7 +58,7 @@
 ## GitHub Actions (CI/CD)
 
 - CI (`.github/workflows/ci.yml`):
-	- Lint/format checks (ESLint, Prettier), build, unit tests with coverage upload (Codecov), integration tests via `make test-with-docker`, and a TypeScript type-check job. Runs on Node 20 with npm caching.
+  - Lint/format checks (ESLint, Prettier), build, unit tests with coverage upload (Codecov), integration tests via `make test-with-docker`, and a TypeScript type-check job. Runs on Node 20 with npm caching.
 - PR Checks (`.github/workflows/pr-checks.yml`):
-	- Fails if build produces uncommitted changes; forbids `console.log`/`console.debug` in `src/`; ensures `package-lock.json` is current; reports bundle size; runs `npm audit` and `npm outdated`.
+  - Fails if build produces uncommitted changes; forbids `console.log`/`console.debug` in `src/`; ensures `package-lock.json` is current; reports bundle size; runs `npm audit` and `npm outdated`.
 - Dependabot (`.github/dependabot.yml`): weekly npm and monthly GitHub Actions updates with labelled PRs and conventional commit prefixes.
