@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 
-import OpenAI from "openai";
+import OpenAIClient from "openai";
 
 import { Logger } from "../../utils/logger.js";
 import { EmbeddingService } from "../types.js";
@@ -14,14 +14,14 @@ export interface OpenAIEmbeddingOptions {
 const DEFAULT_BATCH_SIZE = 64;
 
 export class OpenAIEmbeddingService implements EmbeddingService {
-  private readonly client?: OpenAI;
+  private readonly client?: OpenAIClient;
 
   constructor(
     private readonly options: OpenAIEmbeddingOptions,
     private readonly logger: Logger
   ) {
     if (options.apiKey) {
-      this.client = new OpenAI({ apiKey: options.apiKey });
+      this.client = new OpenAIClient({ apiKey: options.apiKey });
     }
   }
 

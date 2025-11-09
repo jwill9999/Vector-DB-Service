@@ -12,6 +12,8 @@
 	lint \
 	start \
 	test \
+	test-unit \
+	test-int \
 	test-with-docker \
 	docker \
 	docker-build \
@@ -133,19 +135,20 @@ docker-test-clean:
 test:
 	$(call run_with_env,$(TEST_ENV_FILE),npm run test)
 
-test-with-docker:
+test-unit:
+	npm run test:unit
+
+test-int:
 	@if [ ! -f $(DOCKER_ENV_FILE) ]; then \
 		echo "$(DOCKER_ENV_FILE) not found; please create it from .env.example"; \
 		exit 1; \
-	fi
-	@set -e; \
-	PHASE_START='\033[1;44;97m[1/3] Launch Supabase + migrate\033[0m'; \
-	PHASE_WAIT='\033[1;45;97m[2/3] Await migration completion\033[0m'; \
-	PHASE_TEST='\033[1;42;97m[3/3] Run test suite\033[0m'; \
+	fi; \
+	set -e; \
 	trap "COMPOSE_PROJECT_NAME=$(TEST_COMPOSE_PROJECT) CONTAINER_PREFIX=$(TEST_CONTAINER_PREFIX) SERVICE_ENV_FILE=$(DOCKER_ENV_FILE) $(compose) down" EXIT; \
-	printf '%b\n' "$$PHASE_START"; \
 	COMPOSE_PROJECT_NAME=$(TEST_COMPOSE_PROJECT) CONTAINER_PREFIX=$(TEST_CONTAINER_PREFIX) SERVICE_ENV_FILE=$(DOCKER_ENV_FILE) $(compose) up -d supabase migrate; \
-	printf '%b\n' "$$PHASE_WAIT"; \
 	COMPOSE_PROJECT_NAME=$(TEST_COMPOSE_PROJECT) CONTAINER_PREFIX=$(TEST_CONTAINER_PREFIX) SERVICE_ENV_FILE=$(DOCKER_ENV_FILE) $(compose) wait migrate; \
-	printf '%b\n' "$$PHASE_TEST"; \
-	$(MAKE) --no-print-directory test
+	export $$(grep -v '^#' $(TEST_ENV_FILE) | xargs); \
+	npm run test:integration
+
+test-with-docker:
+	$(MAKE) --no-print-directory test-int

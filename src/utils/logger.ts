@@ -1,11 +1,11 @@
-import pino from "pino";
+import pinoLogger from "pino";
 
 import { EnvironmentName } from "./config.js";
 
 export function createLogger(env: EnvironmentName) {
   const isDevelopment = env === "development";
 
-  return pino({
+  return pinoLogger({
     level: process.env.LOG_LEVEL || (env === "test" ? "silent" : "info"),
     transport: isDevelopment
       ? {
