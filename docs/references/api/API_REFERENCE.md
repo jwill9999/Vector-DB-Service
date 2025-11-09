@@ -86,7 +86,7 @@ curl -i \
 
 Receives Google Drive push notification payloads and enqueues ingestion work. Requests are expected to originate from Google Workspace. The handler validates the shared verification token (if configured) and attempts to extract a Google Drive file identifier from the request body or `x-goog-resource-uri` header.
 
-- **Authentication:** Shared secret via the `x-goog-channel-token` header when `GOOGLE_DRIVE_WEBHOOK_VERIFICATION_SECRET` is configured. When unset, no token validation occurs.
+- **Authentication:** Shared secret via the `x-goog-channel-token` header when `GOOGLE_DRIVE_WEBHOOK_SECRET` is configured. When unset, no token validation occurs.
 - **Required headers:**
   - `x-goog-resource-uri`: Used as a fallback source for the file ID.
   - `x-goog-resource-id`, `x-goog-resource-state`, `x-goog-message-number`, `x-goog-changed`: Optional headers passed through to the ingestion queue.
@@ -121,7 +121,7 @@ curl -i \
 ### Testing Tips
 
 - Use ngrok or a similar tunnel if Google Drive needs to reach your local instance.
-- Responses surface validation errors immediately; ingestion itself is asynchronous and handled by the configured queue.
+- Responses surface validation errors immediately; ingestion runs within the request lifecycle, so a `202` response means the fetch/chunk/embed pipeline completed without throwing.
 
 ## Environment Notes
 
