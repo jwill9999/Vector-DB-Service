@@ -23,7 +23,7 @@
     "commit": "npm run format && npm run lint:fix",
     "test": "npm run build && vitest run",
     "test:unit": "npm run build && vitest run --config vitest.config.ts",
-    "test:integration": "vitest run --config vitest.integration.config.ts",
+    "test:integration": "npm run build && vitest run --config vitest.integration.config.ts",
     "test:coverage": "npm run build && vitest run --coverage"
   },
   "keywords": [
