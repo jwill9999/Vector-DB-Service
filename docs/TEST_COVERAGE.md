@@ -273,9 +273,9 @@ describe("Module Name", () => {
 
 ## Related Documentation
 
-- [Testing Playbook](./TESTING.md) - How to run tests locally and in CI
-- [Architecture](./ARCHITECTURE.md) - System architecture and component overview
-- [Supabase Operations](./SUPABASE_OPERATIONS.md) - Database testing setup
+- [Testing Playbook](./guides/contributors/TESTING.md) - How to run tests locally and in CI
+- [Architecture Overview](./references/architecture/ARCHITECTURE.md) - System architecture and component overview
+- [Supabase Operations Guide](./guides/operations/SUPABASE_OPERATIONS.md) - Database testing setup
 
 ## Tracking
 

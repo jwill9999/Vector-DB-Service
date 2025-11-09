@@ -7,13 +7,14 @@ This microservice ingests Google Docs into a Supabase-backed vector store and ex
 
 ## Documentation Index
 
-- [Architecture Overview](docs/ARCHITECTURE.md)
-- [Service Flow Diagram](docs/SERVICE_FLOW.md)
-- [Google Drive Watch Playbook](docs/GOOGLE_DRIVE_WATCH.md)
-- [Supabase Operations Guide](docs/SUPABASE_OPERATIONS.md)
-- [Deployment Playbook](docs/DEPLOYMENT_PLAYBOOK.md)
-- [Local Docker Workflow](docs/LOCAL_DOCKER.md)
-- [Testing Playbook](docs/TESTING.md)
+- [Repository Guidelines](docs/guides/contributors/AGENTS.md)
+- [Architecture Overview](docs/references/architecture/ARCHITECTURE.md)
+- [Service Flow Diagram](docs/references/architecture/SERVICE_FLOW.md)
+- [Google Drive Watch Playbook](docs/guides/operations/GOOGLE_DRIVE_WATCH.md)
+- [Supabase Operations Guide](docs/guides/operations/SUPABASE_OPERATIONS.md)
+- [Deployment Playbook](docs/playbooks/DEPLOYMENT_PLAYBOOK.md)
+- [Local Docker Workflow](docs/tutorials/LOCAL_DOCKER.md)
+- [Testing Playbook](docs/guides/contributors/TESTING.md)
 
 ## Quick Start
 

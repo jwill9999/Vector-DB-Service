@@ -13,7 +13,7 @@ This guide walks through the testing options for the VectorDB ingestion service.
 
 ## Unit Test Loop (`make test`)
 
-Use `make test` for the fast feedback cycle. The target loads `.env.test` and then executes the Node test runner under `c8` for coverage:
+Use `make test` for the fast feedback cycle. The target loads `.env.test` and then runs the Node test runner:
 
 ```bash
 make test
@@ -24,9 +24,7 @@ make test
 - All fast-running unit tests under `src/**/__tests__/`
 - Optional integration specs when the Supabase env vars are present (see next section)
 
-`c8` prints a summary to stdout and stores HTML, LCOV, JSON, and text-summary artifacts under `coverage/` (ignored by Git).
-Open `coverage/index.html` in a browser for the interactive report, and publish `coverage/lcov.info` when downstream tooling (Codecov, Sonar, etc.) needs ingestible data.
-If you have already run `npm run build`, you can re-run coverage alone via `npm run test:coverage`.
+To generate coverage, run `npm run test:coverage` (or `make test && npm run test:coverage` if you need a fresh build). The command wraps the suite with `c8` and stores HTML, LCOV, JSON, and text-summary artifacts under `coverage/` (ignored by Git). Open `coverage/index.html` for the interactive report, and publish `coverage/lcov.info` when downstream tooling (Codecov, Sonar, etc.) needs ingestible data.
 
 ### Limitations
 
@@ -95,8 +93,4 @@ Remember to update `.env.test` if you change ports or connection strings in `doc
 - **Migrations fail**: Inspect the `migrate` container logs (`docker compose logs migrate`) to see the Postgres error. The stack will stay up until the trap runs, so you can debug interactively.
 - **Integration tests skipped**: Check that the Supabase env vars are present in `.env.test`—the Node test runner logs a skip message when they are missing.
 
-## Related Documentation
-
-- [Test Coverage Roadmap](./TEST_COVERAGE.md) - Coverage status and improvement plan
-- [Local Docker Workflow](./LOCAL_DOCKER.md) - Running services locally with Docker
-- [Supabase Operations](./SUPABASE_OPERATIONS.md) - Database operations and schema management
+For more detail on running the service in Docker, see `../../tutorials/LOCAL_DOCKER.md`. For Supabase schema operations, refer to `../operations/SUPABASE_OPERATIONS.md`.

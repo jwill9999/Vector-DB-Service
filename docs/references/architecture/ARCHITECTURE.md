@@ -11,7 +11,7 @@ This document explains how the VectorDB ingestion service operates, how it shoul
 2. **Ingestion pipeline**
    - The webhook handler validates the shared token, extracts the file ID, and enqueues the request with the ingestion pipeline.
    - The pipeline fetches the document via Google Docs API, normalizes content into segments, chunks it with heading awareness, and requests embeddings from the configured provider.
-   - Embedding vectors plus metadata are upserted into Supabase (pgvector). Old chunks for the document are removed to keep the index consistent.
+   - Embedding vectors plus metadata are upsert into Supabase (pgvector). Old chunks for the document are removed to keep the index consistent.
 
 3. **Retrieval**
    - Consumers call `POST /search` with a natural-language query.
@@ -85,6 +85,6 @@ Recommended production setup:
 ## Future Enhancements
 
 - Integrate a durable queue (e.g., BullMQ, SQS) for ingestion retry/backoff.
-- Add OpenAPI spec and interactive docs.
+- Expand the OpenAPI document as routes evolve and keep the `/docs` Swagger view in sync with new handlers.
 - Emit metrics/traces for ingestion latency and embedding throughput.
 - Support streaming responses or server-sent events for long-running ingestion tasks.
