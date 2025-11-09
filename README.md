@@ -1,5 +1,8 @@
 # VectorDB Ingestion Service
 
+[![CI](https://github.com/jwill9999/Vector-DB-Service/actions/workflows/ci.yml/badge.svg)](https://github.com/jwill9999/Vector-DB-Service/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/jwill9999/Vector-DB-Service/graph/badge.svg?token=10WC9KCQD2)](https://codecov.io/gh/jwill9999/Vector-DB-Service)
+
 This microservice ingests Google Docs into a Supabase-backed vector store and exposes a retrieval endpoint for Retrieval-Augmented Generation (RAG) workloads. It watches a designated Google Drive folder, chunkifies updated docs, embeds them via OpenAI, and stores vectors in Supabase (pgvector). A downstream Node application can query the `/search` API to hydrate prompts with relevant context.
 
 ## Documentation Index
