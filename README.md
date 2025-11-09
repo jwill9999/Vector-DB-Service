@@ -26,12 +26,12 @@ Use `make dev` while iterating locally.
 
 ### Essential Make Targets
 
-| Command                 | Purpose                                                                                                    |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `make dev`              | Run the service locally with configuration from `.env`.                                                    |
-| `make docker-supabase`  | Launch only the Supabase container for dedicated ingestion/search testing.                                 |
-| `make docker`           | Bring up the full stack (service + Supabase) via Docker Compose.                                           |
-| `make test-unit`        | Execute unit tests with Vitest.                                                                            |
+| Command                 | Purpose                                                                                                          |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `make dev`              | Run the service locally with configuration from `.env`.                                                          |
+| `make docker-supabase`  | Launch only the Supabase container for dedicated ingestion/search testing.                                       |
+| `make docker`           | Bring up the full stack (service + Supabase) via Docker Compose.                                                 |
+| `make test-unit`        | Execute unit tests with Vitest.                                                                                  |
 | `make test-with-docker` | Provision Supabase via Docker, apply migrations, run integration tests, then tear down containers automatically. |
 
 - `POST /webhooks/google-drive` — Google Drive push notifications (expects Drive headers)

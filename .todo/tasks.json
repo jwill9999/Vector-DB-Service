@@ -9,10 +9,7 @@
       "status": "todo",
       "estimatedHours": 4,
       "dependencies": [],
-      "files": [
-        "src/ingestion/chunk.ts",
-        "tests/unit/chunk.test.ts"
-      ]
+      "files": ["src/ingestion/chunk.ts", "tests/unit/chunk.test.ts"]
     },
     {
       "id": "test-coverage-002",
@@ -23,10 +20,7 @@
       "status": "todo",
       "estimatedHours": 3,
       "dependencies": [],
-      "files": [
-        "src/services/embedding/openaiEmbeddingService.ts",
-        "tests/unit/embedding.test.ts"
-      ]
+      "files": ["src/services/embedding/openaiEmbeddingService.ts", "tests/unit/embedding.test.ts"]
     },
     {
       "id": "test-coverage-003",
@@ -37,10 +31,7 @@
       "status": "todo",
       "estimatedHours": 6,
       "dependencies": ["test-coverage-001", "test-coverage-002"],
-      "files": [
-        "src/ingestion/pipeline.ts",
-        "tests/integration/pipeline.test.ts"
-      ]
+      "files": ["src/ingestion/pipeline.ts", "tests/integration/pipeline.test.ts"]
     },
     {
       "id": "test-coverage-004",
@@ -67,10 +58,7 @@
       "status": "todo",
       "estimatedHours": 5,
       "dependencies": [],
-      "files": [
-        "src/server.ts",
-        "tests/e2e/server.test.ts"
-      ]
+      "files": ["src/server.ts", "tests/e2e/server.test.ts"]
     },
     {
       "id": "test-coverage-006",
@@ -111,10 +99,7 @@
       "status": "todo",
       "estimatedHours": 2,
       "dependencies": [],
-      "files": [
-        "src/middleware/errorHandler.ts",
-        "tests/unit/errorHandler.test.ts"
-      ]
+      "files": ["src/middleware/errorHandler.ts", "tests/unit/errorHandler.test.ts"]
     }
   ]
 }

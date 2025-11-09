@@ -7,6 +7,7 @@ This document provides guidelines for creating and maintaining documentation in 
 All documentation files are stored in the `docs/` directory at the root of the repository. Documentation follows a consistent structure and naming convention.
 
 ### File Naming Convention
+
 - Use `SCREAMING_SNAKE_CASE.md` for all documentation files (e.g., `TEST_COVERAGE.md`, `API_REFERENCE.md`)
 - Keep filenames descriptive and specific to their content
 - Avoid abbreviations unless widely recognized (API, HTTP, E2E)
@@ -70,6 +71,7 @@ Every documentation file should follow this structure:
 ## Writing Style Guidelines
 
 ### Tone and Voice
+
 - Write in **clear, concise technical prose**
 - Use **second person** ("you") for instructions: "Run `npm test` to execute tests"
 - Use **imperative mood** for commands: "Install dependencies" not "You should install dependencies"
@@ -78,6 +80,7 @@ Every documentation file should follow this structure:
 ### Formatting Standards
 
 #### Code Blocks
+
 Always specify the language for syntax highlighting:
 
 ```bash
@@ -98,26 +101,30 @@ const result = await service.fetch();
 ```
 
 #### Lists
+
 - Use **bullet lists** for unordered items
 - Use **numbered lists** for sequential steps
 - Keep list items parallel in structure
 - Use sub-bullets sparingly (max 2 levels)
 
 #### Tables
+
 Use tables for structured comparisons:
 
-| Feature | Description | Status |
-|---------|-------------|--------|
-| Search | Vector search | ✅ Done |
-| Ingest | Doc ingestion | ✅ Done |
+| Feature | Description   | Status  |
+| ------- | ------------- | ------- |
+| Search  | Vector search | ✅ Done |
+| Ingest  | Doc ingestion | ✅ Done |
 
 #### Emphasis
+
 - Use `inline code` for: commands, file paths, function names, environment variables
 - Use **bold** for: important concepts, warnings
-- Use *italics* sparingly for: emphasis within sentences
+- Use _italics_ sparingly for: emphasis within sentences
 - Use > blockquotes for: notes, warnings, tips
 
 #### Links
+
 - Use descriptive link text: `[Testing Guide](./TESTING.md)` not `[click here](./TESTING.md)`
 - Link to related docs at section end under "Related Documentation"
 - Use relative paths for internal docs: `./OTHER_DOC.md`
@@ -130,12 +137,14 @@ Use tables for structured comparisons:
 **Purpose**: Step-by-step instructions for completing a specific task
 
 **Structure**:
-```markdown
+
+````markdown
 # [Task] Playbook
 
 Brief overview of what will be accomplished.
 
 ## Prerequisites
+
 - List of requirements
 - Tools needed
 
@@ -145,15 +154,19 @@ Brief overview of what will be accomplished.
    ```bash
    command example
    ```
+````
+
 2. Second action
 3. Verification step
 
 ## Troubleshooting
+
 - **Issue**: Description
   - **Solution**: Fix
 
 ## Related Documentation
-```
+
+````
 
 **Example**: `DEPLOYMENT_PLAYBOOK.md`, `GOOGLE_DRIVE_WATCH.md`
 
@@ -178,7 +191,7 @@ Detailed technical information.
 Specific details with examples.
 
 ## Related Documentation
-```
+````
 
 **Example**: `API_REFERENCE.md`, `SUPABASE_OPERATIONS.md`
 
@@ -189,6 +202,7 @@ Specific details with examples.
 **Purpose**: Explain system design, architecture, and concepts
 
 **Structure**:
+
 ```markdown
 # [Concept] Overview
 
@@ -218,6 +232,7 @@ Deep dives as needed.
 **Purpose**: Track ongoing work, test coverage, technical debt
 
 **Structure**:
+
 ```markdown
 # [Area] Roadmap / Status
 
@@ -228,21 +243,26 @@ Summary with metrics.
 ## [Category] Status
 
 ### ✅ Completed
+
 - Item 1
 - Item 2
 
 ### 🟡 In Progress
+
 - Item 3
 
 ### 🔴 Not Started
+
 - Item 4
 
 ## Goals
 
 ### Short Term
+
 - Goals for 1-2 weeks
 
 ### Long Term
+
 - Goals for 1-3 months
 
 ## Related Documentation
@@ -255,6 +275,7 @@ Summary with metrics.
 ## Task Tracking System
 
 ### Location
+
 Task tracking uses `.todo/tasks.json` at the repository root.
 
 ### Task Structure
@@ -271,19 +292,18 @@ Task tracking uses `.todo/tasks.json` at the repository root.
       "status": "todo|in-progress|done|blocked",
       "estimatedHours": 4,
       "dependencies": ["other-task-id"],
-      "files": [
-        "path/to/file.ts",
-        "path/to/test.ts"
-      ]
+      "files": ["path/to/file.ts", "path/to/test.ts"]
     }
   ]
 }
 ```
 
 ### Task ID Convention
+
 Format: `[category]-[subcategory]-[number]`
 
 Examples:
+
 - `test-coverage-001` - First test coverage task
 - `docs-api-001` - First API documentation task
 - `feature-search-001` - First search feature task
@@ -401,7 +421,7 @@ Use absolute paths in examples:
 # Good
 cat /home/runner/work/Vector-DB-Service/.env.test
 
-# Avoid  
+# Avoid
 cat .env.test
 ```
 
@@ -416,6 +436,7 @@ Set `SUPABASE_URL` in your `.env` file.
 ### Status Indicators
 
 Use emoji consistently:
+
 - ✅ Done/Working/Good
 - 🟡 Partial/In Progress/Warning
 - 🔴 Not Done/Broken/Error
@@ -427,7 +448,7 @@ Use emoji consistently:
 
 ### Good Documentation Example
 
-```markdown
+````markdown
 # Local Docker Workflow
 
 Run the VectorDB service locally using Docker Compose for rapid iteration.
@@ -443,8 +464,10 @@ Run the VectorDB service locally using Docker Compose for rapid iteration.
    ```bash
    make docker
    ```
+````
 
 2. Verify services are running:
+
    ```bash
    docker ps | grep vectordb
    ```
@@ -463,7 +486,8 @@ Run the VectorDB service locally using Docker Compose for rapid iteration.
 
 - [Testing Guide](./TESTING.md) - How to test locally
 - [Deployment](./DEPLOYMENT_PLAYBOOK.md) - Production setup
-```
+
+````
 
 ### Poor Documentation Example (Avoid)
 
@@ -479,9 +503,10 @@ docker ps
 If it doesn't work, check the logs or something.
 
 [click here](./TESTING.md)
-```
+````
 
 **Issues**:
+
 - Vague title
 - No overview
 - No prerequisites
@@ -494,6 +519,7 @@ If it doesn't work, check the logs or something.
 ### Regular Reviews
 
 Documentation should be reviewed:
+
 - **After major features**: Update affected docs
 - **Quarterly**: Check for outdated info
 - **Before releases**: Ensure accuracy
@@ -507,6 +533,7 @@ Documentation should be reviewed:
 ## Questions?
 
 For questions about documentation:
+
 1. Check existing docs for similar patterns
 2. Review this guide
 3. Ask in PR comments for specific guidance

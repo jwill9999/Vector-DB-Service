@@ -1,10 +1,10 @@
-import { randomUUID } from 'node:crypto';
+import { randomUUID } from "node:crypto";
 
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from "vitest";
 
-import { createSupabaseVectorStore } from '../../src/services/supabase/vectorStore.js';
-import { AppConfig } from '../../src/utils/config.js';
-import { createLogger } from '../../src/utils/logger.js';
+import { createSupabaseVectorStore } from "../../src/services/supabase/vectorStore.js";
+import { AppConfig } from "../../src/utils/config.js";
+import { createLogger } from "../../src/utils/logger.js";
 
 const parsedDimension = process.env.SUPABASE_EMBEDDING_DIMENSIONS
   ? Number.parseInt(process.env.SUPABASE_EMBEDDING_DIMENSIONS, 10)
@@ -17,8 +17,8 @@ const directUrl = process.env.SUPABASE_DIRECT_URL;
 const missingEnv = !restUrl && !directUrl;
 
 const integrationConfig: AppConfig = {
-  env: 'test',
-  host: '0.0.0.0',
+  env: "test",
+  host: "0.0.0.0",
   port: 8080,
   googleDrive: {
     watchFolderId: undefined,
@@ -32,33 +32,33 @@ const integrationConfig: AppConfig = {
     serviceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
     directUrl,
     anonKey: undefined,
-    schema: process.env.SUPABASE_SCHEMA ?? 'public',
-    documentTable: process.env.SUPABASE_DOCUMENT_TABLE ?? 'documents',
-    chunkTable: process.env.SUPABASE_CHUNK_TABLE ?? 'document_chunks',
-    matchFunction: process.env.SUPABASE_MATCH_FUNCTION ?? 'match_document_chunks',
+    schema: process.env.SUPABASE_SCHEMA ?? "public",
+    documentTable: process.env.SUPABASE_DOCUMENT_TABLE ?? "documents",
+    chunkTable: process.env.SUPABASE_CHUNK_TABLE ?? "document_chunks",
+    matchFunction: process.env.SUPABASE_MATCH_FUNCTION ?? "match_document_chunks",
     embeddingDimensions: dimension,
   },
   embeddings: {
-    provider: 'openai',
+    provider: "openai",
     openai: {
       apiKey: undefined,
-      model: 'text-embedding-3-small',
+      model: "text-embedding-3-small",
     },
   },
-  ingestionQueueName: 'test-queue',
+  ingestionQueueName: "test-queue",
 };
 
-describe.skipIf(missingEnv)('Supabase Vector Store Integration', () => {
-  it('upserts and queries vectors successfully', async () => {
+describe.skipIf(missingEnv)("Supabase Vector Store Integration", () => {
+  it("upserts and queries vectors successfully", async () => {
     const logger = createLogger(integrationConfig.env);
     const store = createSupabaseVectorStore(integrationConfig, logger);
     const documentId = randomUUID();
 
     await store.upsertDocument({
       documentId,
-      title: 'integration test document',
-      source: 'test',
-      metadata: { note: 'temporary' },
+      title: "integration test document",
+      source: "test",
+      metadata: { note: "temporary" },
     });
 
     await store.deleteDocumentChunks(documentId);
@@ -68,11 +68,11 @@ describe.skipIf(missingEnv)('Supabase Vector Store Integration', () => {
       {
         documentId,
         chunkId: randomUUID(),
-        content: 'Sample chunk content for integration test.',
-        source: 'test',
+        content: "Sample chunk content for integration test.",
+        source: "test",
         ordering: 0,
         embedding,
-        metadata: { heading: { level: 1, text: 'Heading' } },
+        metadata: { heading: { level: 1, text: "Heading" } },
       },
     ]);
 
@@ -85,8 +85,8 @@ describe.skipIf(missingEnv)('Supabase Vector Store Integration', () => {
   });
 });
 
-describe('Supabase Vector Store Fallback', () => {
-  it('handles missing credentials gracefully', async () => {
+describe("Supabase Vector Store Fallback", () => {
+  it("handles missing credentials gracefully", async () => {
     const logger = createLogger(integrationConfig.env);
     const store = createSupabaseVectorStore(
       {
@@ -104,8 +104,8 @@ describe('Supabase Vector Store Fallback', () => {
     await expect(
       store.upsertDocument({
         documentId: randomUUID(),
-        title: 'noop',
-        source: 'test',
+        title: "noop",
+        source: "test",
       })
     ).resolves.not.toThrow();
 
