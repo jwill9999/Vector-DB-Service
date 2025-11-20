@@ -26,6 +26,7 @@ coverage/
 # Environment variables
 .env
 .env.*
+.env2.example
 !.env.example
 !.env.docker
 !.env.test
