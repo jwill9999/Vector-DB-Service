@@ -34,21 +34,25 @@ This directory contains the CI/CD workflows for the Vector-DB-Service project.
 - **Bundle Size Check**: Reports bundle size and warns if > 10MB
 - **Dependency Audit**: Runs `npm audit` and checks for outdated packages
 
-## Security Scanning
+### 🔒 CodeQL Security Analysis (`codeql.yml`)
 
-### 🔒 CodeQL Security Analysis
+**Triggers:** Push to `main`/`develop`, Pull Requests targeting `main`/`develop`, weekly schedule (Monday 06:00 UTC)
 
-**Note:** This repository uses GitHub's **default CodeQL setup** for security scanning, which is enabled in repository settings under **Code security and analysis**.
+**Jobs:**
 
-The default setup:
+- **Analyze**: Runs GitHub's CodeQL engine against the TypeScript/JavaScript source using the `security-extended` query suite
 
-- Automatically scans TypeScript/JavaScript code for security vulnerabilities
-- Runs on every push and pull request
-- Updates automatically with new security rules from GitHub
-- Requires no workflow file or configuration
-- Results available in the GitHub Security tab
+This workflow provides an **explicit, file-based CodeQL configuration** so that code scanning results are always produced for the target branches — independent of the repository-level "default setup" toggle in GitHub Settings.
 
-**No custom workflow needed** - GitHub manages this automatically.
+Results are surfaced in the **GitHub Security → Code scanning alerts** tab.
+
+**Permissions required (granted by the workflow):**
+
+| Permission       | Reason                                    |
+| ---------------- | ----------------------------------------- |
+| `contents: read` | Checkout source code                      |
+| `actions: read`  | Read workflow metadata during analysis    |
+| `security-events: write` | Upload SARIF results to GitHub  |
 
 ## Dependabot
 
@@ -77,17 +81,21 @@ Code coverage reporting is integrated into the CI workflow and displays a badge 
 
 **Badge URL:** The Codecov badge in README.md displays the current coverage percentage and links to detailed coverage reports.
 
-### Branch Protection Rules (Recommended)
+### Branch Protection Rules (Required)
 
-Configure on `main` branch:
+Configure on `main` **and** `develop` branches (Settings → Branches → Branch protection rules):
 
-- Require status checks to pass:
+- **Require status checks to pass before merging:**
   - `Lint and Format Check`
   - `Build`
   - `Unit Tests`
   - `TypeScript Type Check`
+  - `Analyze (javascript-typescript)` ← CodeQL scan
+- **Require signed commits** — ensures every commit pushed directly or merged into the branch carries a verified GPG/SSH/S/MIME signature
 - Require PR reviews before merging
 - Require linear history
+
+> **Note on signed commits:** GitHub Actions commits (e.g., automated dependency bumps via `GITHUB_TOKEN`) are automatically verified by GitHub. Developer commits must be signed locally with a GPG or SSH key registered in GitHub account settings.
 
 ## Running Workflows Locally
 
@@ -136,7 +144,14 @@ The following badges are displayed in README.md and update automatically:
 [![codecov](https://codecov.io/gh/jwill9999/Vector-DB-Service/graph/badge.svg)](https://codecov.io/gh/jwill9999/Vector-DB-Service)
 ```
 
+**CodeQL Security Analysis:**
+
+```markdown
+[![CodeQL](https://github.com/jwill9999/Vector-DB-Service/actions/workflows/codeql.yml/badge.svg)](https://github.com/jwill9999/Vector-DB-Service/actions/workflows/codeql.yml)
+```
+
 These badges are already included in the README and will display:
 
 - **CI Badge**: Shows the status of the latest CI workflow run across all branches (passing/failing)
 - **Codecov Badge**: Shows the current code coverage percentage (requires CODECOV_TOKEN to be configured and repository setup on Codecov)
+- **CodeQL Badge**: Shows whether the latest code scanning analysis passed (security vulnerabilities found/none)
